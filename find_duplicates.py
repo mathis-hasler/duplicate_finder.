@@ -30,8 +30,10 @@ def get_file_size(file_path: str) -> int:
     Returns:
         int or None: The file size in bytes, or None if the file cannot be accessed.
     """
+
+    file_size = os.stat(file_path).st_size
+    return file_size
     # Run "pytest find_duplicates.py -k get_file_size" to test your implementation
-    raise NotImplementedError()
 
 
 def hash_first_1k_bytes(file_path: str) -> str:
