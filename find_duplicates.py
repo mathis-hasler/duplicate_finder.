@@ -151,6 +151,15 @@ def file_size_string(num_bytes: int) -> str:
         None
     """
     sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"]
+
+    if num_bytes == 0:
+        return "0B"
+
+    idx = math.floor(math.log10(num_bytes) / 3)
+    size = num_bytes / 1000 ** idx
+
+    return f"{size:2f}{sizes[idx]}"
+
     # Run "pytest find_duplicates.py -k file_size_string" to test your implementation
     raise NotImplementedError()
 
@@ -312,7 +321,8 @@ def test_filter_files_by_first_1k_bytes():
         file4 = create_file(temp_dir, "file4.txt", "A" * 1024 + "B" * 24)
         file5 = create_file(temp_dir, "file5.txt", "A" * 1024 + "C" * 24)
 
-        duplicates = filter_files_by_first_1k_bytes([file1, file2, file3, file4, file5])
+        duplicates = filter_files_by_first_1k_bytes(
+            [file1, file2, file3, file4, file5])
         assert set(duplicates) == {file1, file2, file4, file5}
 
 
